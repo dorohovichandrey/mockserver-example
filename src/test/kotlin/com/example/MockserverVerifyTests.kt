@@ -14,7 +14,6 @@ import org.mockserver.model.Parameter.param
 import org.mockserver.verify.VerificationTimes
 import org.testcontainers.containers.MockServerContainer
 import org.testcontainers.utility.DockerImageName
-import kotlin.random.Random
 
 class MockserverVerifyTests {
 
@@ -46,15 +45,15 @@ class MockserverVerifyTests {
 
     @Test
     fun `verify exactly once check should pass` () {
-        val testFile = Random.nextBytes(ByteArray(2745))
+        val json = "{ \"id\": 123 }"
         val request = request()
             .withMethod("GET")
             .withPath("/something/{id}")
             .withPathParameters(param("id"))
         val response = response()
             .withStatusCode(201)
-            .withContentType(MediaType.APPLICATION_OCTET_STREAM)
-            .withBody(testFile)
+            .withContentType(MediaType.APPLICATION_JSON)
+            .withBody(json)
         mockServerClient.`when`(request).respond(response)
 
 
@@ -69,15 +68,15 @@ class MockserverVerifyTests {
 
     @Test
     fun `verify exactly two times check should pass` () {
-        val testFile = Random.nextBytes(ByteArray(2745))
+        val json = "{ \"id\": 123 }"
         val request = request()
             .withMethod("GET")
             .withPath("/something/{id}")
             .withPathParameters(param("id"))
         val response = response()
             .withStatusCode(201)
-            .withContentType(MediaType.APPLICATION_OCTET_STREAM)
-            .withBody(testFile)
+            .withContentType(MediaType.APPLICATION_JSON)
+            .withBody(json)
         mockServerClient.`when`(request).respond(response)
 
 

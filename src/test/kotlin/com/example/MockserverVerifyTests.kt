@@ -29,7 +29,6 @@ class MockserverVerifyTests {
             val mockserver = MockServerContainer(
                 DockerImageName.parse("mockserver/mockserver:mockserver-$mockserverVersion")
             )
-                .withLabel("service", "sme-onboarding")
                 .withReuse(true)
 
             mockserver.start()
@@ -43,21 +42,6 @@ class MockserverVerifyTests {
     @BeforeEach
     fun beforeEach() {
         mockServerClient.reset()
-    }
-
-    fun initializeMockserver(): MockServerClient {
-        val mockserverVersion = MockServerClient::class.java.getPackage().implementationVersion
-        val mockserver = MockServerContainer(
-            DockerImageName.parse("mockserver/mockserver:mockserver-$mockserverVersion")
-        )
-            .withLabel("service", "sme-onboarding")
-            .withReuse(true)
-
-        mockserver.start()
-
-        RestAssured.port = mockserver.serverPort
-
-        return MockServerClient(mockserver.host, mockserver.serverPort)
     }
 
     @Test

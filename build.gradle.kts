@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     val restAssuredVersion = "4.4.0"
-    val mockserverVersion = "5.14.0"
+    val mockserverVersion = "5.13.2"
     val testcontainersVersion = "1.17.3"
 
     testImplementation(kotlin("test"))
